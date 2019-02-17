@@ -69,7 +69,7 @@
             <div
               v-for="image in images"
               :key="image.id_str"
-              class="col-4"
+              class="col-3 col-xl-2"
             >
               <div
                 class="thumb"
