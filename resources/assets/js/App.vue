@@ -216,7 +216,7 @@ export default {
         })
     },
     selectList (id) {
-      this.drawer = false
+      if (this.$q.screen.lt.lg) this.drawer = false
 
       this.currentListId = id
       this.$q.loading.show()
