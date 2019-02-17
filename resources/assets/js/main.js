@@ -1,6 +1,5 @@
 // Vue Core Packages
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 
 // Quasar Styles
 import 'quasar-extras/material-icons'
