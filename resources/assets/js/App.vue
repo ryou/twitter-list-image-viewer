@@ -1,6 +1,6 @@
 <template>
   <!-- main wrapping component -->
-  <q-layout>
+  <q-layout view="lHr Lpr fff">
     <q-layout-header reveal>
       <q-toolbar color="primary">
         <q-btn
@@ -16,7 +16,6 @@
 
     <q-layout-drawer
       v-model="drawer"
-      content-class="bg-grey-3"
       side="left"
     >
       <q-list no-border>
