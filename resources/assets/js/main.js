@@ -14,7 +14,6 @@ import Quasar, * as All from 'quasar-framework/dist/quasar.mat.esm'
 import App from '@/App'
 
 // use
-Vue.use(VueRouter)
 Vue.use(Quasar, {
   components: All,
   directives: All,
