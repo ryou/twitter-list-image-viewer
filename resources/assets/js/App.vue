@@ -72,7 +72,7 @@
             >
               <div
                 class="thumb"
-                :style="{ 'background-image': `url(${image.media_url_https})` }"
+                :style="{ 'background-image': `url(${image.media_url_https}:thumb)` }"
                 @click="image.onClick"
               />
             </div>
