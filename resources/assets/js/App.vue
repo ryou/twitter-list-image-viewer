@@ -1,6 +1,6 @@
 <template>
   <!-- main wrapping component -->
-  <q-layout>
+  <q-layout view="lHr Lpr fff">
     <q-layout-header reveal>
       <q-toolbar color="primary">
         <q-btn
@@ -16,7 +16,6 @@
 
     <q-layout-drawer
       v-model="drawer"
-      content-class="bg-grey-3"
       side="left"
     >
       <q-list no-border>
@@ -69,11 +68,11 @@
             <div
               v-for="image in images"
               :key="image.id_str"
-              class="col-4"
+              class="col-3 col-xl-2"
             >
               <div
                 class="thumb"
-                :style="{ 'background-image': `url(${image.media_url_https})` }"
+                :style="{ 'background-image': `url(${image.media_url_https}:thumb)` }"
                 @click="image.onClick"
               />
             </div>
@@ -216,7 +215,7 @@ export default {
         })
     },
     selectList (id) {
-      this.drawer = false
+      if (this.$q.screen.lt.lg) this.drawer = false
 
       this.currentListId = id
       this.$q.loading.show()
