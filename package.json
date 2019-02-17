@@ -46,5 +46,8 @@
   "dependencies": {
     "quasar-extras": "^2.0.9",
     "quasar-framework": "^0.17.19"
+  },
+  "engines": {
+    "node": "11.7.0"
   }
 }
