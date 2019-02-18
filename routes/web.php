@@ -13,6 +13,7 @@
 
 Route::get('/', 'MainController@index')->name('home');
 
+Route::get('auth/login/demo', 'LoginController@loginDemo')->name('login.demo');
 Route::get('auth/login', 'LoginController@login')->name('login');
 Route::get('auth/callback', 'LoginController@callback')->name('login.callback');
 Route::get('auth/logout', 'LoginController@logout')->name('logout');
