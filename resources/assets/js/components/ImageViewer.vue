@@ -32,6 +32,25 @@
         >
           <q-icon name="close" />
         </div>
+        <div
+          v-if="showArrow"
+          class="ImageViewer_arrows"
+        >
+          <div
+            v-show="existPrevImage"
+            class="ImageViewer_arrow -prev"
+            @click="prevSlide"
+          >
+            <q-icon name="chevron_left" />
+          </div>
+          <div
+            v-show="existNextImage"
+            class="ImageViewer_arrow -next"
+            @click="nextSlide"
+          >
+            <q-icon name="chevron_right" />
+          </div>
+        </div>
         <div class="ImageViewer_status">
           <div class="Status">
             <div class="Status_content">
@@ -110,10 +129,22 @@ export default {
   },
   data () {
     return {
+      currentIndex: 0,
       showInfo: true,
     }
   },
   computed: {
+    existPrevImage () {
+      return this.currentIndex > 0
+    },
+    existNextImage () {
+      return this.currentIndex < (this.images.length - 1)
+    },
+    showArrow () {
+      if (this.$q.screen.lt.lg) return false
+
+      return this.showInfo
+    },
     tweet () {
       if (this.status.retweeted_status !== undefined) return this.status.retweeted_status
 
@@ -134,11 +165,30 @@ export default {
       this.$emit('hide')
     },
     onShow () {
-      const width = window.innerWidth
-      this.$refs.scroller.scrollTo({ left: width * this.index })
+      this.currentIndex = this.index
+      this.slideTo(this.currentIndex)
     },
     onHide () {
       this.showInfo = true
+    },
+    slideTo (index, isSmooth = false) {
+      const width = window.innerWidth
+      this.$refs.scroller.scrollTo({
+        left: width * index,
+        behavior: (isSmooth) ? 'smooth' : 'auto',
+      })
+    },
+    prevSlide () {
+      if (!this.existPrevImage) return
+
+      this.currentIndex--
+      this.slideTo(this.currentIndex, true)
+    },
+    nextSlide () {
+      if (!this.existNextImage) return
+
+      this.currentIndex++
+      this.slideTo(this.currentIndex, true)
     },
   },
 }
@@ -220,6 +270,36 @@ export default {
   font-size: 24px;
   color: #fff;
   background: rgba(#000, .8);
+
+  cursor: pointer;
+}
+.ImageViewer_arrows {
+  position: absolute;
+  left: 0; right: 0;
+  top: 50%;
+  height: 0;
+
+  color: #fff;
+}
+.ImageViewer_arrow {
+  position: absolute;
+  top: -20px;
+
+  background-color: rgba(#000, .8);
+  text-align: center;
+  font-size: 30px;
+
+  width: 40px; height: 40px;
+  border-radius: 9999px;
+
+  cursor: pointer;
+
+  &.-prev {
+    left: 20px;
+  }
+  &.-next {
+    right: 20px;
+  }
 }
 .ImageViewer_status {
   position: absolute;
