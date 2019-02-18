@@ -268,7 +268,7 @@ export default {
 </script>
 
 <style lang="scss">
-* {
+body {
   overscroll-behavior: none !important;
 }
 </style>

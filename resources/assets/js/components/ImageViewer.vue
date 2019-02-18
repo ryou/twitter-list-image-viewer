@@ -203,6 +203,11 @@ export default {
 
   transition: opacity .2s;
 
+  overscroll-behavior: none;
+  * {
+    overscroll-behavior: none;
+  }
+
   &:not(.-visible) {
     opacity: 0;
     pointer-events: none;
