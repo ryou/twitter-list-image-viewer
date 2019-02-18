@@ -183,6 +183,7 @@ export default {
       })
       .catch(error => {
         if (error.response.status === 401) this.showLoginDialog()
+        else this.showErrorDialog(error)
       })
   },
   methods: {
@@ -194,7 +195,7 @@ export default {
         })
         .catch(error => {
           if (error.response.status === 401) this.showLoginDialog()
-          else this.showErrorDialog()
+          else this.showErrorDialog(error)
         })
     },
     loadMore (index, done) {
@@ -211,7 +212,7 @@ export default {
         })
         .catch(error => {
           if (error.response.status === 401) this.showLoginDialog()
-          else this.showErrorDialog()
+          else this.showErrorDialog(error)
         })
     },
     selectList (id) {
@@ -230,7 +231,7 @@ export default {
         })
         .catch(error => {
           if (error.response.status === 401) this.showLoginDialog()
-          else this.showErrorDialog()
+          else this.showErrorDialog(error)
         })
     },
     showImageViewer (status, index) {
@@ -255,11 +256,11 @@ export default {
         //
       })
     },
-    showErrorDialog () {
+    showErrorDialog (error) {
       this.$q.loading.hide()
       this.$q.dialog({
-        title: 'エラー',
-        message: 'なんかエラー',
+        title: String(error.response.status),
+        message: error.response.statusText,
       })
     },
   },

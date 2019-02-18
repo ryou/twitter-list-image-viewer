@@ -39,14 +39,20 @@ class MockTwitterApiClient implements TwitterApiClient
     {
         $json = Storage::disk('api_mock')->get('verify_credentials.json');
 
-        return json_decode($json);
+        return [
+            'code' => 200,
+            'data' => json_decode($json),
+        ];
     }
 
     public function getLists()
     {
         $json = Storage::disk('api_mock')->get('lists.json');
 
-        return json_decode($json);
+        return [
+            'code' => 200,
+            'data' => json_decode($json),
+        ];
     }
 
     public function getListStatuses(array $parameter = [])
@@ -58,6 +64,9 @@ class MockTwitterApiClient implements TwitterApiClient
 
         $json = Storage::disk('api_mock')->get($jsonFileName);
 
-        return json_decode($json);
+        return [
+            'code' => 200,
+            'data' => json_decode($json),
+        ];
     }
 }

@@ -20,13 +20,17 @@ class ApiController extends Controller
     public function verifyCredentials()
     {
         $this->setUpClient();
-        return response()->json($this->client->verityCredentials());
+        $response = $this->client->verityCredentials();
+
+        return response()->json($response['data'], $response['code']);
     }
 
     public function getLists()
     {
         $this->setUpClient();
-        return response()->json($this->client->getLists());
+        $response = $this->client->getLists();
+
+        return response()->json($response['data'], $response['code']);
     }
 
     public function getListStatuses(Request $request, string $listId)
@@ -34,7 +38,9 @@ class ApiController extends Controller
         $parameters = array_merge([ 'list_id' => $listId ], $request->all());
 
         $this->setUpClient();
-        return response()->json($this->client->getListStatuses($parameters));
+        $response = $this->client->getListStatuses($parameters);
+
+        return response()->json($response['data'], $response['code']);
     }
 
     protected function setUpClient()

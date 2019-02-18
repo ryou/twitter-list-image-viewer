@@ -18,8 +18,8 @@ class LoginController extends Controller
         $twitterUserInfo = $client->getUserInfo();
 
         session()->put([
-            'token' =>$twitterUserInfo->token,
-            'token_secret' =>$twitterUserInfo->tokenSecret,
+            'token' => $twitterUserInfo->token,
+            'token_secret' => $twitterUserInfo->tokenSecret,
         ]);
 
         return redirect()->route("home");
@@ -28,6 +28,16 @@ class LoginController extends Controller
     public function logout()
     {
         session()->forget([ 'token', 'token_secret' ]);
+
+        return redirect()->route("home");
+    }
+
+    public function loginDemo()
+    {
+        session()->put([
+            'token' => env('TWITTER_DEMO_ACCESS_TOKEN'),
+            'token_secret' => env('TWITTER_DEMO_ACCESS_TOKEN_SECRET'),
+        ]);
 
         return redirect()->route("home");
     }

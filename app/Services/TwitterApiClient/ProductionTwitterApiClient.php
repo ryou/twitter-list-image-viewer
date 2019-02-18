@@ -34,16 +34,31 @@ class ProductionTwitterApiClient implements TwitterApiClient
 
     public function verityCredentials()
     {
-        return $this->connection->get("account/verify_credentials");
+        $result = $this->connection->get("account/verify_credentials");
+
+        return [
+            'code' => $this->connection->getLastHttpCode(),
+            'data' => $result,
+        ];
     }
 
     public function getLists()
     {
-        return $this->connection->get("lists/list");
+        $result = $this->connection->get("lists/list");
+
+        return [
+            'code' => $this->connection->getLastHttpCode(),
+            'data' => $result,
+        ];
     }
 
     public function getListStatuses(array $parameter = [])
     {
-        return $this->connection->get("lists/statuses", $parameter);
+        $result = $this->connection->get("lists/statuses", $parameter);
+
+        return [
+            'code' => $this->connection->getLastHttpCode(),
+            'data' => $result,
+        ];
     }
 }
