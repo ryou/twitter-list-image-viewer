@@ -206,8 +206,11 @@ export default {
 
       axios.get(`/api/lists/statuses/${this.currentListId}`, { params: { count: FETCH_COUNT, max_id: this.oldestStatusId } })
         .then(res => {
-          if (res.data.length < FETCH_COUNT) this.canLoadMore = false
+          const oldLength = this.statuses.length
           this.statuses = _.unionBy(this.statuses, res.data, 'id_str')
+          const newLength = this.statuses.length
+          if (newLength === oldLength) this.canLoadMore = false
+
           done()
         })
         .catch(error => {
