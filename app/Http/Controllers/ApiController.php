@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\TwitterApiClient\TwitterApiClient;
 use Illuminate\Http\Request;
+use Symfony\Component\Debug\Debug;
 
 class ApiController extends Controller
 {
@@ -40,7 +41,13 @@ class ApiController extends Controller
         $this->setUpClient();
         $response = $this->client->getListStatuses($parameters);
 
-        return response()->json($response['data'], $response['code']);
+        $data = [];
+        foreach ($response['data'] as $item)
+        {
+            if (property_exists($item, 'extended_entities')) $data[] = $item;
+        }
+
+        return response()->json($data, $response['code']);
     }
 
     protected function setUpClient()
