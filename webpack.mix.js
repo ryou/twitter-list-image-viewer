@@ -10,6 +10,13 @@ mix.webpackConfig({
   },
 })
 
+mix.options({
+  hmrOptions: {
+    host: 'localhost',
+    port: 8082,
+  },
+})
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
