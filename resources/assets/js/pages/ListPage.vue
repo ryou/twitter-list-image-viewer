@@ -1,28 +1,22 @@
 <template>
-  <keep-alive include="HomePage">
-    <router-view />
-  </keep-alive>
+  <router-view />
 </template>
 
 <script>
 import ErrorDialogsMixin from '@/mixins/ErrorDialogs'
 
 export default {
+  name: 'ListPage',
   mixins: [ ErrorDialogsMixin ],
-  data () {
-    return {}
-  },
   created () {
-    if (this.$store.state.user !== null && this.$store.state.lists.length > 0) return
-
+    if (this.$store.getters.statusesOfList(this.$route.params.id).length > 0) return
     this.$q.loading.show()
 
-    const verifyPromise = this.$store.dispatch('fetchUserInfo')
-    const listPromise = this.$store.dispatch('fetchLists')
-
-    Promise.all([verifyPromise, listPromise])
-      .then(() => {
+    this.$store.dispatch('fetchStatuses', this.$route.params.id)
+      .then(res => {
         this.$q.loading.hide()
+
+        window.scrollTo({ top: 0 })
       })
       .catch(error => {
         if (error.response.status === 401) this.showLoginDialog()

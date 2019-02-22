@@ -13,6 +13,9 @@ import Quasar, * as All from 'quasar-framework/dist/quasar.mat.esm'
 // Vue Components
 import App from '@/App'
 
+import router from '@/router'
+import store from '@/store'
+
 // use
 Vue.use(Quasar, {
   components: All,
@@ -26,4 +29,6 @@ Vue.use(Quasar, {
 new Vue({
   el: '#app',
   render: h => h(App),
+  router,
+  store,
 })
