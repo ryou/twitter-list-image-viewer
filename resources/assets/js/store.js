@@ -71,7 +71,7 @@ export default new Vuex.Store({
         })
     },
     fetchNewStatuses ({ getters, commit }, listId) {
-      axios.get(`/api/lists/statuses/${listId}`, { params: {
+      return axios.get(`/api/lists/statuses/${listId}`, { params: {
         count: FETCH_COUNT,
         since_id: getters.newestStatusId(listId),
       } })
@@ -83,7 +83,7 @@ export default new Vuex.Store({
         })
     },
     fetchOldStatuses ({ getters, commit }, listId) {
-      axios.get(`/api/lists/statuses/${listId}`, { params: {
+      return axios.get(`/api/lists/statuses/${listId}`, { params: {
         count: FETCH_COUNT,
         max_id: getters.oldestStatusId(listId),
       } })

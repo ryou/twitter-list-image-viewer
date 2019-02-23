@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <q-layout-header>
+    <q-layout-header class="no-shadow">
       <q-toolbar
         color="transparent"
         text-color="white"
@@ -160,6 +160,9 @@ export default {
   },
   created () {
     this.currentIndex = this.$route.params.index
+  },
+  mounted () {
+    this.slideTo(this.currentIndex)
   },
   methods: {
     slideTo (index, isSmooth = false) {
