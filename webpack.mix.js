@@ -10,6 +10,13 @@ mix.webpackConfig({
   },
 })
 
+mix.options({
+  hmrOptions: {
+    host: 'localhost',
+    port: 8082,
+  },
+})
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -24,4 +31,7 @@ mix.webpackConfig({
 mix.js('resources/assets/js/main.js', 'public/assets/js')
   .stylus('resources/assets/stylus/main.styl', 'public/assets/css')
   .sass('resources/assets/sass/app.scss', 'public/assets/css')
-  .version()
+
+// Version does not work in HMR mode
+// https://github.com/JeffreyWay/laravel-mix/issues/1176
+if (process.env.npm_lifecycle_event !== 'hot') mix.version()
