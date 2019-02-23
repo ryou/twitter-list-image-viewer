@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <q-layout-header>
+    <q-layout-header class="no-shadow">
       <q-toolbar
         color="transparent"
         text-color="white"
