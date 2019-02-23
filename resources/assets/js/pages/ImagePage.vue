@@ -161,6 +161,9 @@ export default {
   created () {
     this.currentIndex = this.$route.params.index
   },
+  mounted () {
+    this.slideTo(this.currentIndex)
+  },
   methods: {
     slideTo (index, isSmooth = false) {
       const width = window.innerWidth
