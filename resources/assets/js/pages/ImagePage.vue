@@ -104,7 +104,7 @@
                             :href="`https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`"
                             target="_blank"
                             class="Status_created"
-                          >1/23 14:00</a>
+                          >{{ tweetDate }}</a>
                         </div>
                         <div class="Status_body">
                           {{ tweet.text }}
@@ -153,6 +153,11 @@ export default {
       if (this.status.retweeted_status !== undefined) return this.status.retweeted_status
 
       return this.status
+    },
+    tweetDate () {
+      const date = new Date(this.tweet.created_at)
+
+      return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
     },
     images () {
       return this.status.extended_entities.media
@@ -336,7 +341,7 @@ export default {
   margin-bottom: 3px;
 }
 .Status_name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
 }
 .Status_screenName {
@@ -346,6 +351,6 @@ export default {
   font-size: 12px;
 }
 .Status_body {
-  font-size: 14px;
+  font-size: 13px;
 }
 </style>
