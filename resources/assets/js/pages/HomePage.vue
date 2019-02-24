@@ -9,7 +9,7 @@
     <q-page-container>
       <q-page>
         <q-list no-border>
-          <q-item v-if="$store.state.user !== null">
+          <q-item v-if="$store.state.user !== undefined">
             <q-item-side>
               <q-item-tile avatar>
                 <img
