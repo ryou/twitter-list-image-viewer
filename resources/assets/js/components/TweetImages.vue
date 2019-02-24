@@ -1,5 +1,8 @@
 <template>
-  <div class="TweetImages">
+  <div
+    ref="wrapper"
+    class="TweetImages"
+  >
     <div
       ref="scroller"
       class="TweetImages_images"
@@ -74,7 +77,7 @@ export default {
   },
   methods: {
     slideTo (index, isSmooth = false) {
-      const width = window.innerWidth
+      const width = this.$refs.wrapper.clientWidth
       this.$refs.scroller.scrollTo({
         left: width * index,
         behavior: (isSmooth) ? 'smooth' : 'auto',
