@@ -105,7 +105,7 @@ export default {
 
   display: flex;
 
-  height: 100vh;
+  height: calc(100vh - 50px);
 
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
@@ -115,21 +115,16 @@ export default {
   flex-grow: 0;
   flex-basis: 100%;
 
-  height: 100vh;
+  height: calc(100vh - 50px);
 
   scroll-snap-align: center;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
   img {
     vertical-align: top;
     object-fit: contain;
 
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
   }
 }
 .TweetImages_arrows {

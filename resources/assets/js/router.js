@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomePage from '@/pages/HomePage'
 import ListPage from '@/pages/ListPage'
-import ListIndexPage from '@/pages/ListIndexPage'
 import ImagePage from '@/pages/ImagePage'
 
 Vue.use(VueRouter)
@@ -22,26 +21,23 @@ export default new VueRouter({
     {
       path: '/list/:id',
       component: ListPage,
-      children: [
-        {
-          path: '',
-          name: 'list',
-          component: ListIndexPage,
-          meta: {
-            header: {
-              title: 'List',
-              back: true,
-            },
-          },
+      meta: {
+        header: {
+          title: 'List',
+          back: true,
         },
-        {
-          path: 'image/:status_id/:index',
-          name: 'image',
-          component: ImagePage,
-          meta: {
-          },
+      },
+    },
+    {
+      path: '/list/:id/image/:status_id/:index',
+      name: 'image',
+      component: ImagePage,
+      meta: {
+        header: {
+          title: 'Image',
+          back: true,
         },
-      ],
+      },
     },
   ],
 })
