@@ -20,7 +20,7 @@
         :enter-active-class="transition.enterActiveClass"
         :leave-active-class="transition.leaveActiveClass"
       >
-        <keep-alive include="HomePage">
+        <keep-alive include="HomePage,ListPage">
           <router-view />
         </keep-alive>
       </transition>
