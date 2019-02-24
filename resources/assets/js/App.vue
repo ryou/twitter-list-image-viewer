@@ -80,6 +80,6 @@ body {
 }
 
 .animated {
-  animation-duration: .5s;
+  animation-duration: .15s;
 }
 </style>
