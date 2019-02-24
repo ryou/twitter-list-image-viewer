@@ -1,74 +1,49 @@
 <template>
-  <q-layout view="hHh Lpr lFf">
-    <q-layout-header>
-      <q-toolbar color="primary">
-        <q-btn
-          flat
-          round
-          dense
-          icon="arrow_back"
-          @click="historyBack"
-        />
-        <q-toolbar-title>{{ list.name }}</q-toolbar-title>
-        <q-btn
-          flat
-          round
-          dense
-          icon="settings"
-          @click="showModal = true"
-        />
-      </q-toolbar>
-    </q-layout-header>
-
-    <q-page-container>
-      <q-page>
-        <q-pull-to-refresh
-          v-if="statuses.length > 0"
-          :handler="refresh"
+  <q-page>
+    <q-pull-to-refresh
+      v-if="statuses.length > 0"
+      :handler="refresh"
+    >
+      <q-infinite-scroll
+        ref="infiniteScroll"
+        :handler="loadMore"
+      >
+        <div
+          class="row"
+          no-wrap
         >
-          <q-infinite-scroll
-            ref="infiniteScroll"
-            :handler="loadMore"
+          <div
+            v-for="image in images"
+            :key="image.id_str"
+            class="col-3 col-xl-2"
           >
-            <div
-              class="row"
-              no-wrap
-            >
-              <div
-                v-for="image in images"
-                :key="image.id_str"
-                class="col-3 col-xl-2"
-              >
-                <router-link
-                  tag="div"
-                  class="thumb"
-                  :style="{ 'background-image': `url(${image.media_url_https}:thumb)` }"
-                  :to="{
-                    name: 'image',
-                    params: {
-                      id: $route.params.id,
-                      status_id: image.originalStatus.id_str,
-                      index: image.originalStatus.index,
-                    }
-                  }"
-                />
-              </div>
-            </div>
+            <router-link
+              tag="div"
+              class="thumb"
+              :style="{ 'background-image': `url(${image.media_url_https}:thumb)` }"
+              :to="{
+                name: 'image',
+                params: {
+                  id: $route.params.id,
+                  status_id: image.originalStatus.id_str,
+                  index: image.originalStatus.index,
+                }
+              }"
+            />
+          </div>
+        </div>
 
-            <div
-              slot="message"
-              class="text-center"
-            >
-              <q-spinner-dots
-                v-if="canLoadMore"
-                :size="40"
-              />
-            </div>
-          </q-infinite-scroll>
-        </q-pull-to-refresh>
-      </q-page>
-    </q-page-container>
-
+        <div
+          slot="message"
+          class="text-center"
+        >
+          <q-spinner-dots
+            v-if="canLoadMore"
+            :size="40"
+          />
+        </div>
+      </q-infinite-scroll>
+    </q-pull-to-refresh>
     <q-modal v-model="showModal">
       <q-modal-layout>
         <q-toolbar slot="header">
@@ -99,7 +74,7 @@
         </div>
       </q-modal-layout>
     </q-modal>
-  </q-layout>
+  </q-page>
 </template>
 
 <script>

@@ -13,6 +13,11 @@ export default new VueRouter({
       path: '/',
       name: 'home',
       component: HomePage,
+      meta: {
+        header: {
+          title: 'Twitter List Image Viewer',
+        },
+      },
     },
     {
       path: '/list/:id',
@@ -22,11 +27,19 @@ export default new VueRouter({
           path: '',
           name: 'list',
           component: ListIndexPage,
+          meta: {
+            header: {
+              title: 'List',
+              back: true,
+            },
+          },
         },
         {
           path: 'image/:status_id/:index',
           name: 'image',
           component: ImagePage,
+          meta: {
+          },
         },
       ],
     },
