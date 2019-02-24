@@ -1,5 +1,8 @@
 <template>
-  <div class="TweetImages">
+  <div
+    ref="wrapper"
+    class="TweetImages"
+  >
     <div
       ref="scroller"
       class="TweetImages_images"
@@ -74,7 +77,7 @@ export default {
   },
   methods: {
     slideTo (index, isSmooth = false) {
-      const width = window.innerWidth
+      const width = this.$refs.wrapper.clientWidth
       this.$refs.scroller.scrollTo({
         left: width * index,
         behavior: (isSmooth) ? 'smooth' : 'auto',
@@ -105,7 +108,7 @@ export default {
 
   display: flex;
 
-  height: 100vh;
+  height: calc(100vh - 50px);
 
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
@@ -115,21 +118,16 @@ export default {
   flex-grow: 0;
   flex-basis: 100%;
 
-  height: 100vh;
+  height: calc(100vh - 50px);
 
   scroll-snap-align: center;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
   img {
     vertical-align: top;
     object-fit: contain;
 
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
   }
 }
 .TweetImages_arrows {

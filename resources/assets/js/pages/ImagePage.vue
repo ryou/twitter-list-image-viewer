@@ -1,48 +1,28 @@
 <template>
-  <q-layout>
-    <q-layout-header class="no-shadow">
-      <q-toolbar
-        color="transparent"
-        text-color="white"
-      >
-        <q-btn
-          v-show="showInfo"
-          flat
-          round
-          dense
-          icon="arrow_back"
-          @click="historyBack"
+  <q-page>
+    <div
+      class="ImageViewer"
+    >
+      <div class="ImageViewer_overlay" />
+      <template v-if="status !== undefined">
+        <TweetImages
+          v-touch-swipe.vertical="historyBack"
+          :images="images"
+          :show-arrow="showArrow"
+          :index="Number($route.params.index)"
+          @click.native="showInfo = !showInfo"
         />
-      </q-toolbar>
-    </q-layout-header>
-
-    <q-page-container style="padding-top: 0;">
-      <q-page>
         <div
-          class="ImageViewer"
+          v-show="showInfo"
+          class="ImageViewer_status"
         >
-          <div class="ImageViewer_overlay" />
-          <template v-if="status !== undefined">
-            <TweetImages
-              v-touch-swipe.vertical="historyBack"
-              :images="images"
-              :show-arrow="showArrow"
-              :index="Number($route.params.index)"
-              @click.native="showInfo = !showInfo"
-            />
-            <div
-              v-show="showInfo"
-              class="ImageViewer_status"
-            >
-              <Status
-                :status="status"
-              />
-            </div>
-          </template>
+          <Status
+            :status="status"
+          />
         </div>
-      </q-page>
-    </q-page-container>
-  </q-layout>
+      </template>
+    </div>
+  </q-page>
 </template>
 
 <script>
@@ -95,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 .ImageViewer {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 50px);
 }
 .ImageViewer_overlay {
   position: absolute;
