@@ -7,7 +7,6 @@ import ImagePage from '@/pages/ImagePage'
 Vue.use(VueRouter)
 
 export default new VueRouter({
-  mode: 'history',
   routes: [
     {
       path: '/',
@@ -46,12 +45,12 @@ export default new VueRouter({
     if (savedPosition) {
       option = {
         position: savedPosition,
-        delay: 550,
+        delay: 160,
       }
     } else {
       option = {
         position: { x: 0, y: 0 },
-        delay: 300,
+        delay: 10,
       }
     }
 
