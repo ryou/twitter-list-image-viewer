@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr lFf ">
+  <q-layout view="hHh Lpr lFf">
     <q-layout-header>
       <q-toolbar color="primary">
         <q-toolbar-title>Twitter List Image Viewer</q-toolbar-title>
@@ -9,7 +9,7 @@
     <q-page-container>
       <q-page>
         <q-list no-border>
-          <q-item v-if="$store.state.user !== null">
+          <q-item v-if="$store.state.user !== undefined">
             <q-item-side>
               <q-item-tile avatar>
                 <img

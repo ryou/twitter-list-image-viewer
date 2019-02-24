@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { unionBy } from 'lodash'
-const axios = require('axios')
+import ApiClient from '@/libs/ApiClient'
 
 Vue.use(Vuex)
 
@@ -9,7 +9,7 @@ const FETCH_COUNT = 200
 
 export default new Vuex.Store({
   state: {
-    user: null,
+    user: undefined,
     lists: [],
     statuses: {},
   },
@@ -50,48 +50,35 @@ export default new Vuex.Store({
   },
   actions: {
     fetchUserInfo ({ commit }) {
-      return axios.get('/api/account/verify_credentials')
-        .then(res => {
-          commit('setUser', res.data)
-        })
+      return ApiClient.verifyCredentials()
+        .then(user => commit('setUser', user))
     },
     fetchLists ({ commit }) {
-      return axios.get('/api/lists/list')
-        .then(res => {
-          commit('setLists', res.data)
-        })
+      return ApiClient.fetchLists()
+        .then(lists => commit('setLists', lists))
     },
     fetchStatuses ({ commit }, listId) {
-      return axios.get(`/api/lists/statuses/${listId}`, { params: { count: FETCH_COUNT } })
-        .then(res => {
-          commit('setStatuses', {
-            listId,
-            statuses: res.data,
-          })
+      return ApiClient.fetchListStatuses(listId, { count: FETCH_COUNT })
+        .then(statuses => {
+          commit('setStatuses', { listId, statuses })
         })
     },
     fetchNewStatuses ({ getters, commit }, listId) {
-      return axios.get(`/api/lists/statuses/${listId}`, { params: {
-        count: FETCH_COUNT,
-        since_id: getters.newestStatusId(listId),
-      } })
-        .then(res => {
-          commit('prependStatuses', {
-            listId,
-            statuses: res.data,
-          })
+      return ApiClient.fetchListStatuses(
+        listId,
+        { count: FETCH_COUNT, since_id: getters.newestStatusId(listId) }
+      )
+        .then(statuses => {
+          commit('prependStatuses', { listId, statuses })
         })
     },
     fetchOldStatuses ({ getters, commit }, listId) {
-      return axios.get(`/api/lists/statuses/${listId}`, { params: {
-        count: FETCH_COUNT,
-        max_id: getters.oldestStatusId(listId),
-      } })
-        .then(res => {
-          commit('appendStatuses', {
-            listId,
-            statuses: res.data,
-          })
+      return ApiClient.fetchListStatuses(
+        listId,
+        { count: FETCH_COUNT, max_id: getters.oldestStatusId(listId) }
+      )
+        .then(statuses => {
+          commit('appendStatuses', { listId, statuses })
         })
     },
   },
