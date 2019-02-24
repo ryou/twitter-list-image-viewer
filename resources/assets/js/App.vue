@@ -15,9 +15,15 @@
     </q-layout-header>
 
     <q-page-container>
-      <keep-alive include="HomePage">
-        <router-view />
-      </keep-alive>
+      <transition
+        mode="out-in"
+        :enter-active-class="transition.enterActiveClass"
+        :leave-active-class="transition.leaveActiveClass"
+      >
+        <keep-alive include="HomePage">
+          <router-view />
+        </keep-alive>
+      </transition>
     </q-page-container>
   </q-layout>
 </template>
@@ -27,6 +33,22 @@ import ErrorDialogsMixin from '@/mixins/ErrorDialogs'
 
 export default {
   mixins: [ ErrorDialogsMixin ],
+  data () {
+    return {
+      transition: {
+        enterActiveClass: '',
+        leaveActiveClass: '',
+      },
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      const toDepth = to.path.split('/').length
+      const fromDepth = from.path.split('/').length
+      this.transition.enterActiveClass = toDepth < fromDepth ? 'animated fadeInLeft' : 'animated fadeInRight'
+      this.transition.leaveActiveClass = toDepth < fromDepth ? 'animated fadeOutRight' : 'animated fadeOutLeft'
+    },
+  },
   created () {
     if (this.$store.state.user !== null && this.$store.state.lists.length > 0) return
 
@@ -55,5 +77,9 @@ export default {
 <style lang="scss">
 body {
   overscroll-behavior: contain;
+}
+
+.animated {
+  animation-duration: .5s;
 }
 </style>

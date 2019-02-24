@@ -14,6 +14,19 @@
         />
         <div
           v-show="showInfo"
+          class="ImageViewer_back"
+        >
+          <q-btn
+            flat
+            round
+            dense
+            color="white"
+            icon="arrow_back"
+            @click="historyBack"
+          />
+        </div>
+        <div
+          v-show="showInfo"
           class="ImageViewer_status"
         >
           <Status
@@ -85,6 +98,13 @@ export default {
   right: 0;
 
   background: #000;
+}
+.ImageViewer_back {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  padding: 9px 12px;
 }
 .ImageViewer_status {
   position: absolute;

@@ -3,20 +3,25 @@
 </template>
 
 <script>
+import store from '@/store'
+import { Loading } from 'quasar-framework/dist/quasar.mat.esm'
 import ErrorDialogsMixin from '@/mixins/ErrorDialogs'
 
 export default {
   name: 'ListPage',
   mixins: [ ErrorDialogsMixin ],
-  created () {
-    if (this.$store.getters.statusesOfList(this.$route.params.id).length > 0) return
-    this.$q.loading.show()
+  beforeRouteEnter (route, redirect, next) {
+    if (store.getters.statusesOfList(route.params.id).length > 0) {
+      next()
+      return
+    }
+    Loading.show()
 
-    this.$store.dispatch('fetchStatuses', this.$route.params.id)
+    store.dispatch('fetchStatuses', route.params.id)
       .then(res => {
-        this.$q.loading.hide()
+        Loading.hide()
 
-        window.scrollTo({ top: 0 })
+        next()
       })
       .catch(error => {
         if (error.response.status === 401) this.showLoginDialog()
