@@ -19,6 +19,7 @@
         mode="out-in"
         :enter-active-class="transition.enterActiveClass"
         :leave-active-class="transition.leaveActiveClass"
+        @after-leave="$root.$emit('triggerScroll')"
       >
         <keep-alive include="HomePage,ListPage">
           <router-view />
@@ -80,6 +81,6 @@ body {
 }
 
 .animated {
-  animation-duration: .15s;
+  animation-duration: .2s;
 }
 </style>

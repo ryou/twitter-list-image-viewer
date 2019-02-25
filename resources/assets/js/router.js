@@ -6,7 +6,7 @@ import ImagePage from '@/pages/ImagePage'
 
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
   routes: [
     {
       path: '/',
@@ -41,25 +41,19 @@ export default new VueRouter({
     },
   ],
   scrollBehavior (to, from, savedPosition) {
-    let option
-    if (savedPosition) {
-      option = {
-        position: savedPosition,
-        delay: 160,
-      }
-    } else {
-      option = {
-        position: { x: 0, y: 0 },
-        delay: 10,
-      }
-    }
-
-    // 画面遷移のタイミングに合わせるために、0.55s後にスクロール位置を返す
-    // https://router.vuejs.org/ja/guide/advanced/scroll-behavior.html#%E9%9D%9E%E5%90%8C%E6%9C%9F%E3%81%AA%E3%82%B9%E3%82%AF%E3%83%AD%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0
+    // TODO: キレイに動くようになったが、なぜこれでキレイに動くのかちゃんとわかっていない
+    // ScrollBehaviorの実装を見る必要あるかも
+    // https://github.com/quasarframework/quasar/issues/1466#issuecomment-416495843
+    const position = savedPosition || { x: 0, y: 0 }
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(option.position)
-      }, option.delay)
+      router.app.$root.$once('triggerScroll', () => {
+        router.app.$nextTick(() => {
+          window.scrollTo({ top: position.y, left: position.x })
+          resolve(position)
+        })
+      })
     })
   },
 })
+
+export default router
