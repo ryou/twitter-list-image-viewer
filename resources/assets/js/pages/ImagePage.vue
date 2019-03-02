@@ -23,30 +23,22 @@
         </div>
       </template>
     </div>
-    <TweetActionSheet
-      :active="showActionSheet"
-      :status="status"
-      @hide="showActionSheet = false"
-    />
   </q-page>
 </template>
 
 <script>
 import Status from '@/components/Status'
 import TweetImages from '@/components/TweetImages'
-import TweetActionSheet from '@/components/TweetActionSheet'
 
 export default {
   name: 'ImagePage',
   components: {
     Status,
     TweetImages,
-    TweetActionSheet,
   },
   data () {
     return {
       showInfo: true,
-      showActionSheet: false,
     }
   },
   computed: {
