@@ -1,80 +1,98 @@
 <template>
-  <q-page>
-    <q-pull-to-refresh
-      v-if="statuses.length > 0"
-      :handler="refresh"
-    >
-      <q-infinite-scroll
-        ref="infiniteScroll"
-        :handler="loadMore"
-      >
-        <div
-          class="row"
-          no-wrap
+  <q-layout view="hHh Lpr lFf">
+    <q-layout-header>
+      <q-toolbar color="primary">
+        <q-btn
+          flat
+          round
+          dense
+          icon="arrow_back"
+          @click="historyBack"
+        />
+        <q-toolbar-title>{{ list.name }}</q-toolbar-title>
+      </q-toolbar>
+    </q-layout-header>
+
+    <q-page-container>
+      <q-page>
+        <q-pull-to-refresh
+          v-if="statuses.length > 0"
+          :handler="refresh"
+          :distance="5"
         >
-          <div
-            v-for="image in images"
-            :key="image.id_str"
-            class="col-3 col-xl-2"
+          <q-infinite-scroll
+            ref="infiniteScroll"
+            :handler="loadMore"
           >
-            <router-link
-              tag="div"
-              class="thumb"
-              :style="{ 'background-image': `url(${image.media_url_https}:thumb)` }"
-              :to="{
-                name: 'image',
-                params: {
-                  id: $route.params.id,
-                  status_id: image.originalStatus.id_str,
-                  index: image.originalStatus.index,
-                }
-              }"
-            />
-          </div>
-        </div>
+            <div
+              class="row"
+              no-wrap
+            >
+              <div
+                v-for="image in images"
+                :key="image.id_str"
+                class="col-3 col-xl-2"
+              >
+                <router-link
+                  tag="div"
+                  class="thumb"
+                  :style="{ 'background-image': `url(${image.media_url_https}:thumb)` }"
+                  :to="{
+                    name: 'image',
+                    params: {
+                      id: $route.params.id,
+                      status_id: image.originalStatus.id_str,
+                      index: image.originalStatus.index,
+                    }
+                  }"
+                />
+              </div>
+            </div>
 
-        <div
-          slot="message"
-          class="text-center"
-        >
-          <q-spinner-dots
-            v-if="canLoadMore"
-            :size="40"
-          />
-        </div>
-      </q-infinite-scroll>
-    </q-pull-to-refresh>
-    <q-modal v-model="showModal">
-      <q-modal-layout>
-        <q-toolbar slot="header">
-          <q-icon name="settings" />
-          <q-toolbar-title>Settings</q-toolbar-title>
-          <q-btn
-            flat
-            round
-            dense
-            icon="close"
-            @click="showModal = false"
-          />
-        </q-toolbar>
+            <div
+              slot="message"
+              class="text-center"
+            >
+              <q-spinner-dots
+                v-if="canLoadMore"
+                :size="40"
+              />
+            </div>
+          </q-infinite-scroll>
+        </q-pull-to-refresh>
+        <q-modal v-model="showModal">
+          <q-modal-layout>
+            <q-toolbar slot="header">
+              <q-icon name="settings" />
+              <q-toolbar-title>Settings</q-toolbar-title>
+              <q-btn
+                flat
+                round
+                dense
+                icon="close"
+                @click="showModal = false"
+              />
+            </q-toolbar>
 
-        <div class="layout-padding">
-          <q-list>
-            <q-item tag="label">
-              <q-item-main>
-                <q-item-tile label>
-                  Show retweets
-                </q-item-tile>
-              </q-item-main>
-              <q-item-side right>
-                <q-toggle v-model="showRetweets" />
-              </q-item-side>
-            </q-item>
-          </q-list>
-        </div>
-      </q-modal-layout>
-    </q-modal>
-  </q-page>
+            <div class="layout-padding">
+              <q-list>
+                <q-item tag="label">
+                  <q-item-main>
+                    <q-item-tile label>
+                      Show retweets
+                    </q-item-tile>
+                  </q-item-main>
+                  <q-item-side right>
+                    <q-toggle v-model="showRetweets" />
+                  </q-item-side>
+                </q-item>
+              </q-list>
+            </div>
+          </q-modal-layout>
+        </q-modal>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>

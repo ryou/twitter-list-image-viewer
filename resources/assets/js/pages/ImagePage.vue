@@ -1,34 +1,60 @@
 <template>
-  <q-page>
-    <div
-      class="ImageViewer"
+  <q-layout view="hHh Lpr lFf">
+    <transition
+      enter-active-class="animated fadeInDown"
+      leave-active-class="animated fadeOutUp"
     >
-      <div class="ImageViewer_overlay" />
-      <template v-if="status !== undefined">
-        <TweetImages
-          v-touch-swipe.vertical="historyBack"
-          v-touch-hold="() => showActionSheet = true"
-          :images="images"
-          :show-arrow="showArrow"
-          :index="Number($route.params.index)"
-          @click.native="showInfo = !showInfo"
-        />
-        <transition
-          enter-active-class="animated fadeInUp"
-          leave-active-class="animated fadeOutDown"
+      <q-layout-header
+        v-show="showInfo"
+        class="no-shadow"
+      >
+        <q-toolbar
+          color="transparent"
         >
-          <div
-            v-show="showInfo"
-            class="ImageViewer_status"
-          >
-            <Status
-              :status="status"
+          <q-btn
+            flat
+            round
+            dense
+            icon="arrow_back"
+            @click="historyBack"
+          />
+          <q-toolbar-title />
+        </q-toolbar>
+      </q-layout-header>
+    </transition>
+
+    <q-page-container style="padding-top: 0;">
+      <q-page style="height: 100vh;">
+        <div
+          class="ImageViewer"
+        >
+          <div class="ImageViewer_overlay" />
+          <template v-if="status !== undefined">
+            <TweetImages
+              v-touch-hold="() => showActionSheet = true"
+              :images="images"
+              :show-arrow="showArrow"
+              :index="Number($route.params.index)"
+              @click.native="showInfo = !showInfo"
             />
-          </div>
-        </transition>
-      </template>
-    </div>
-  </q-page>
+            <transition
+              enter-active-class="animated fadeInUp"
+              leave-active-class="animated fadeOutDown"
+            >
+              <div
+                v-show="showInfo"
+                class="ImageViewer_status"
+              >
+                <Status
+                  :status="status"
+                />
+              </div>
+            </transition>
+          </template>
+        </div>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
