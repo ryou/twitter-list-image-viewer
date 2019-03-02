@@ -83,6 +83,7 @@ export default {
 <style lang="scss">
 body {
   overscroll-behavior: contain;
+  word-break: break-all;
 }
 
 .animated {
