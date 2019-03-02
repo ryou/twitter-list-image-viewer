@@ -3,6 +3,7 @@
     <q-pull-to-refresh
       v-if="statuses.length > 0"
       :handler="refresh"
+      :distance="5"
     >
       <q-infinite-scroll
         ref="infiniteScroll"
