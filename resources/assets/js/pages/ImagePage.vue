@@ -129,5 +129,9 @@ export default {
   background: rgba(#000, .8);
 
   padding: 20px 10px 10px;
+
+  // 「！」や「？」が連続で大量に入っているツイートだと、
+  // なぜか改行されないので暫定対策
+  overflow: hidden;
 }
 </style>
