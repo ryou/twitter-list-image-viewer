@@ -61,4 +61,44 @@ class ProductionTwitterApiClient implements TwitterApiClient
             'data' => $result,
         ];
     }
+
+    public function favorite(string $id)
+    {
+        $result = $this->connection->post("favorites/create", [ 'id' => $id ]);
+
+        return [
+            'code' => $this->connection->getLastHttpCode(),
+            'data' => $result,
+        ];
+    }
+
+    public function unfavorite(string $id)
+    {
+        $result = $this->connection->post("favorites/destroy", [ 'id' => $id ]);
+
+        return [
+            'code' => $this->connection->getLastHttpCode(),
+            'data' => $result,
+        ];
+    }
+
+    public function retweet(string $id)
+    {
+        $result = $this->connection->post("statuses/retweet", [ 'id' => $id ]);
+
+        return [
+            'code' => $this->connection->getLastHttpCode(),
+            'data' => $result,
+        ];
+    }
+
+    public function unretweet(string $id)
+    {
+        $result = $this->connection->post("statuses/unretweet", [ 'id' => $id ]);
+
+        return [
+            'code' => $this->connection->getLastHttpCode(),
+            'data' => $result,
+        ];
+    }
 }

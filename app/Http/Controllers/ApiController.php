@@ -50,6 +50,38 @@ class ApiController extends Controller
         return response()->json($data, $response['code']);
     }
 
+    public function favorite(string $id)
+    {
+        $this->setUpClient();
+        $response = $this->client->favorite($id);
+
+        return response()->json($response['data'], $response['code']);
+    }
+
+    public function unfavorite(string $id)
+    {
+        $this->setUpClient();
+        $response = $this->client->unfavorite($id);
+
+        return response()->json($response['data'], $response['code']);
+    }
+
+    public function retweet(string $id)
+    {
+        $this->setUpClient();
+        $response = $this->client->retweet($id);
+
+        return response()->json($response['data'], $response['code']);
+    }
+
+    public function unretweet(string $id)
+    {
+        $this->setUpClient();
+        $response = $this->client->unretweet($id);
+
+        return response()->json($response['data'], $response['code']);
+    }
+
     protected function setUpClient()
     {
         $this->client->setTokenAndSecret(

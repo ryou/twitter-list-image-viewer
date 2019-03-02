@@ -69,4 +69,36 @@ class MockTwitterApiClient implements TwitterApiClient
             'data' => json_decode($json),
         ];
     }
+
+    public function favorite(string $id)
+    {
+        return [
+            'code' => 200,
+            'data' => [],
+        ];
+    }
+
+    public function unfavorite(string $id)
+    {
+        return [
+            'code' => 200,
+            'data' => [],
+        ];
+    }
+
+    public function retweet(string $id)
+    {
+        return [
+            'code' => 200,
+            'data' => [],
+        ];
+    }
+
+    public function unretweet(string $id)
+    {
+        return [
+            'code' => 200,
+            'data' => [],
+        ];
+    }
 }

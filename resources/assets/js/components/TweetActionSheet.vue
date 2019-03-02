@@ -32,7 +32,7 @@ export default {
           label: 'UnFavorite',
           icon: 'favorite_border',
           color: 'gray',
-          handler: this.unFavorite,
+          handler: this.unfavorite,
         })
       } else {
         outActions.push({
@@ -48,7 +48,7 @@ export default {
           label: 'UnRetweet',
           icon: 'repeat',
           color: 'gray',
-          handler: this.unRetweet,
+          handler: this.unretweet,
         })
       } else {
         outActions.push({
@@ -84,8 +84,8 @@ export default {
           })
         })
     },
-    unFavorite () {
-      this.$store.dispatch('unFavorite', this.status.id_str)
+    unfavorite () {
+      this.$store.dispatch('unfavorite', this.status.id_str)
         .then(() => {
           this.$q.notify({
             type: 'negative',
@@ -102,8 +102,8 @@ export default {
           })
         })
     },
-    unRetweet () {
-      this.$store.dispatch('unRetweet', this.status.id_str)
+    unretweet () {
+      this.$store.dispatch('unretweet', this.status.id_str)
         .then(() => {
           this.$q.notify({
             type: 'negative',

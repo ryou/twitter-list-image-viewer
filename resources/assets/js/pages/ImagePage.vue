@@ -7,7 +7,7 @@
       <template v-if="status !== undefined">
         <TweetImages
           v-touch-swipe.vertical="historyBack"
-          v-touch-hold.prevent="() => showActionSheet = true"
+          v-touch-hold="() => showActionSheet = true"
           :images="images"
           :show-arrow="showArrow"
           :index="Number($route.params.index)"

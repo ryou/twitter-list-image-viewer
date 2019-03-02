@@ -98,28 +98,40 @@ export default new Vuex.Store({
         })
     },
     favorite ({ commit }, idStr) {
-      commit('setFavorite', {
-        idStr,
-        favorited: true,
-      })
+      return ApiClient.favorite(idStr)
+        .then(() => {
+          commit('setFavorite', {
+            idStr,
+            favorited: true,
+          })
+        })
     },
-    unFavorite ({ commit }, idStr) {
-      commit('setFavorite', {
-        idStr,
-        favorited: false,
-      })
+    unfavorite ({ commit }, idStr) {
+      return ApiClient.unfavorite(idStr)
+        .then(() => {
+          commit('setFavorite', {
+            idStr,
+            favorited: false,
+          })
+        })
     },
     retweet ({ commit }, idStr) {
-      commit('setRetweet', {
-        idStr,
-        retweeted: true,
-      })
+      return ApiClient.retweet(idStr)
+        .then(() => {
+          commit('setRetweet', {
+            idStr,
+            retweeted: true,
+          })
+        })
     },
-    unRetweet ({ commit }, idStr) {
-      commit('setRetweet', {
-        idStr,
-        retweeted: false,
-      })
+    unretweet ({ commit }, idStr) {
+      return ApiClient.unretweet(idStr)
+        .then(() => {
+          commit('setRetweet', {
+            idStr,
+            retweeted: false,
+          })
+        })
     },
   },
 })
