@@ -22,14 +22,14 @@
       <div
         v-show="existPrevImage"
         class="TweetImages_arrow -prev"
-        @click="prevSlide"
+        @click.stop="prevSlide"
       >
         <q-icon name="chevron_left" />
       </div>
       <div
         v-show="existNextImage"
         class="TweetImages_arrow -next"
-        @click="nextSlide"
+        @click.stop="nextSlide"
       >
         <q-icon name="chevron_right" />
       </div>
