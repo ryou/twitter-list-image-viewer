@@ -22,4 +22,8 @@ Route::group([ 'middleware' => 'token' ], function () {
     Route::get('/api/account/verify_credentials', 'ApiController@verifyCredentials')->name('api.account.verify_credentials');
     Route::get('/api/lists/list', 'ApiController@getLists')->name('api.lists.list');
     Route::get('/api/lists/statuses/{listId}', 'ApiController@getListStatuses')->name('api.lists.statuses');
+    Route::post('/api/favorites/create/{id}', 'ApiController@favorite')->name('api.favorites.create');
+    Route::post('/api/favorites/destroy/{id}', 'ApiController@unfavorite')->name('api.favorites.destroy');
+    Route::post('/api/statuses/retweet/{id}', 'ApiController@retweet')->name('api.statuses.retweet');
+    Route::post('/api/statuses/unretweet/{id}', 'ApiController@unretweet')->name('api.statuses.unretweet');
 });

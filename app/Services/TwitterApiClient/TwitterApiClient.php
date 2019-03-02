@@ -15,4 +15,12 @@ interface TwitterApiClient
     public function getLists();
 
     public function getListStatuses(array $parameter = []);
+
+    public function favorite(string $id);
+
+    public function unfavorite(string $id);
+
+    public function retweet(string $id);
+
+    public function unretweet(string $id);
 }
