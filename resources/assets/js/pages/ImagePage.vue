@@ -102,6 +102,6 @@ export default {
   text-align: center;
   background: rgba(#000, .8);
 
-  padding: 20px 10px;
+  padding: 20px 10px 10px;
 }
 </style>
