@@ -84,13 +84,17 @@ export default {
       })
     },
     prevSlide () {
-      if (!this.existPrevImage) return
+      if (!this.existPrevImage) {
+        return
+      }
 
       this.currentIndex--
       this.slideTo(this.currentIndex, true)
     },
     nextSlide () {
-      if (!this.existNextImage) return
+      if (!this.existNextImage) {
+        return
+      }
 
       this.currentIndex++
       this.slideTo(this.currentIndex, true)

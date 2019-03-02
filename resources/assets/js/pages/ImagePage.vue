@@ -65,7 +65,9 @@ export default {
       })
     },
     showArrow () {
-      if (this.$q.screen.lt.lg) return false
+      if (this.$q.screen.lt.lg) {
+        return false
+      }
 
       return this.showInfo
     },
@@ -100,6 +102,6 @@ export default {
   text-align: center;
   background: rgba(#000, .8);
 
-  padding: 20px 10px;
+  padding: 20px 10px 10px;
 }
 </style>

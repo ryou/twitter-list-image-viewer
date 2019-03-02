@@ -37,34 +37,48 @@
           </div>
           <div class="Status_actions">
             <div class="Status_action">
-              <q-btn
-                v-if="status.favorited"
-                round
-                icon="favorite"
-                text-color="red"
-                @click="unfavorite"
-              />
-              <q-btn
-                v-else
-                round
-                icon="favorite"
-                @click="favorite"
-              />
+              <transition
+                mode="out-in"
+                :enter-active-class="(status.favorited) ? 'actionActivate' : 'actionDeactivate'"
+              >
+                <q-btn
+                  v-if="status.favorited"
+                  key="unfavorite"
+                  round
+                  icon="favorite"
+                  text-color="red"
+                  @click="unfavorite"
+                />
+                <q-btn
+                  v-else
+                  key="favorite"
+                  round
+                  icon="favorite"
+                  @click="favorite"
+                />
+              </transition>
             </div>
             <div class="Status_action">
-              <q-btn
-                v-if="status.retweeted"
-                round
-                icon="repeat"
-                text-color="green"
-                @click="unretweet"
-              />
-              <q-btn
-                v-else
-                round
-                icon="repeat"
-                @click="retweet"
-              />
+              <transition
+                mode="out-in"
+                :enter-active-class="(status.retweeted) ? 'actionActivate' : 'actionDeactivate'"
+              >
+                <q-btn
+                  v-if="status.retweeted"
+                  key="unretweet"
+                  round
+                  icon="repeat"
+                  text-color="green"
+                  @click="unretweet"
+                />
+                <q-btn
+                  v-else
+                  key="retweet"
+                  round
+                  icon="repeat"
+                  @click="retweet"
+                />
+              </transition>
             </div>
             <div class="Status_action">
               <q-btn
@@ -110,7 +124,9 @@ export default {
   },
   computed: {
     tweet () {
-      if (this.status.retweeted_status !== undefined) return this.status.retweeted_status
+      if (this.status.retweeted_status !== undefined) {
+        return this.status.retweeted_status
+      }
 
       return this.status
     },
@@ -122,7 +138,9 @@ export default {
   },
   methods: {
     favorite () {
-      if (this.isConnecting.favorite) return
+      if (this.isConnecting.favorite) {
+        return
+      }
       this.isConnecting.favorite = true
       this.$store.dispatch('favorite', this.status.id_str)
         .then(() => {
@@ -130,7 +148,9 @@ export default {
         })
     },
     unfavorite () {
-      if (this.isConnecting.favorite) return
+      if (this.isConnecting.favorite) {
+        return
+      }
       this.isConnecting.favorite = true
       this.$store.dispatch('unfavorite', this.status.id_str)
         .then(() => {
@@ -138,7 +158,9 @@ export default {
         })
     },
     retweet () {
-      if (this.isConnecting.retweet) return
+      if (this.isConnecting.retweet) {
+        return
+      }
       this.isConnecting.retweet = true
       this.$store.dispatch('retweet', this.status.id_str)
         .then(() => {
@@ -146,7 +168,9 @@ export default {
         })
     },
     unretweet () {
-      if (this.isConnecting.retweet) return
+      if (this.isConnecting.retweet) {
+        return
+      }
       this.isConnecting.retweet = true
       this.$store.dispatch('unretweet', this.status.id_str)
         .then(() => {
@@ -232,5 +256,36 @@ export default {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 80px;
+}
+
+.actionActivate {
+  animation-name: actionActivate;
+  animation-duration: .5s;
+}
+@keyframes actionActivate {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.3)
+  }
+  100% {
+    transform: scale(1)
+  }
+}
+.actionDeactivate {
+  animation-name: actionDeactivate;
+  animation-duration: .5s;
+}
+@keyframes actionDeactivate {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.8)
+  }
+  100% {
+    transform: scale(1)
+  }
 }
 </style>

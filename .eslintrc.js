@@ -16,5 +16,15 @@ module.exports = {
   rules: {
     // ケツカンマは複数行で必ずついていて欲しい
     'comma-dangle': ['error', 'always-multiline'],
-  }
+
+    // if文等で中括弧を必須にして、必ず中括弧後は改行するように
+    'curly': ['error', 'all'],
+    'brace-style': [
+      'error',
+      '1tbs',
+      {
+        'allowSingleLine': false
+      },
+    ],
+  },
 }

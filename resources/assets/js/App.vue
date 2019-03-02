@@ -51,7 +51,9 @@ export default {
     },
   },
   created () {
-    if (this.$store.state.user !== null && this.$store.state.lists.length > 0) return
+    if (this.$store.state.user !== null && this.$store.state.lists.length > 0) {
+      return
+    }
 
     this.$q.loading.show()
 
@@ -63,8 +65,11 @@ export default {
         this.$q.loading.hide()
       })
       .catch(error => {
-        if (error.response.status === 401) this.showLoginDialog()
-        else this.showErrorDialog(error)
+        if (error.response.status === 401) {
+          this.showLoginDialog()
+        } else {
+          this.showErrorDialog(error)
+        }
       })
   },
   methods: {
