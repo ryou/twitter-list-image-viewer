@@ -16,7 +16,9 @@ export default new Vuex.Store({
   getters: {
     statusesOfList: state => listId => {
       const statuses = state.statuses[listId]
-      if (statuses === undefined) return []
+      if (statuses === undefined) {
+        return []
+      }
       return statuses
     },
     statusFromList: (state, getters) => (listId, statusId) => {

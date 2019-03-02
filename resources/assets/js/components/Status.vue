@@ -110,7 +110,9 @@ export default {
   },
   computed: {
     tweet () {
-      if (this.status.retweeted_status !== undefined) return this.status.retweeted_status
+      if (this.status.retweeted_status !== undefined) {
+        return this.status.retweeted_status
+      }
 
       return this.status
     },
@@ -122,7 +124,9 @@ export default {
   },
   methods: {
     favorite () {
-      if (this.isConnecting.favorite) return
+      if (this.isConnecting.favorite) {
+        return
+      }
       this.isConnecting.favorite = true
       this.$store.dispatch('favorite', this.status.id_str)
         .then(() => {
@@ -130,7 +134,9 @@ export default {
         })
     },
     unfavorite () {
-      if (this.isConnecting.favorite) return
+      if (this.isConnecting.favorite) {
+        return
+      }
       this.isConnecting.favorite = true
       this.$store.dispatch('unfavorite', this.status.id_str)
         .then(() => {
@@ -138,7 +144,9 @@ export default {
         })
     },
     retweet () {
-      if (this.isConnecting.retweet) return
+      if (this.isConnecting.retweet) {
+        return
+      }
       this.isConnecting.retweet = true
       this.$store.dispatch('retweet', this.status.id_str)
         .then(() => {
@@ -146,7 +154,9 @@ export default {
         })
     },
     unretweet () {
-      if (this.isConnecting.retweet) return
+      if (this.isConnecting.retweet) {
+        return
+      }
       this.isConnecting.retweet = true
       this.$store.dispatch('unretweet', this.status.id_str)
         .then(() => {

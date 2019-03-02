@@ -95,7 +95,9 @@ export default {
   computed: {
     list () {
       let currentList = this.$store.state.lists.find(list => list.id_str === this.$route.params.id)
-      if (currentList === undefined) currentList = { name: '' }
+      if (currentList === undefined) {
+        currentList = { name: '' }
+      }
       return currentList
     },
     statuses () {
@@ -140,8 +142,11 @@ export default {
           done()
         })
         .catch(error => {
-          if (error.response.status === 401) this.showLoginDialog()
-          else this.showErrorDialog(error)
+          if (error.response.status === 401) {
+            this.showLoginDialog()
+          } else {
+            this.showErrorDialog(error)
+          }
         })
     },
     loadMore (index, done) {
@@ -156,12 +161,17 @@ export default {
       this.$store.dispatch('fetchOldStatuses', this.$route.params.id)
         .then(res => {
           const newLength = this.statuses.length
-          if (newLength <= oldLength) this.canLoadMore = false
+          if (newLength <= oldLength) {
+            this.canLoadMore = false
+          }
           done()
         })
         .catch(error => {
-          if (error.response.status === 401) this.showLoginDialog()
-          else this.showErrorDialog(error)
+          if (error.response.status === 401) {
+            this.showLoginDialog()
+          } else {
+            this.showErrorDialog(error)
+          }
         })
     },
     historyBack () {
@@ -182,8 +192,11 @@ export default {
         next()
       })
       .catch(error => {
-        if (error.response.status === 401) this.showLoginDialog()
-        else this.showErrorDialog(error)
+        if (error.response.status === 401) {
+          this.showLoginDialog()
+        } else {
+          this.showErrorDialog(error)
+        }
       })
   },
 }
