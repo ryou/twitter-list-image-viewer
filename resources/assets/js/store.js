@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { unionBy } from 'lodash'
+import { forEach, unionBy } from 'lodash'
 import ApiClient from '@/libs/ApiClient'
 
 Vue.use(Vuex)
@@ -47,6 +47,22 @@ export default new Vuex.Store({
       const newStatuses = unionBy(statuses, state.statuses[listId], 'id_str')
       Vue.set(state.statuses, listId, newStatuses)
     },
+    setFavorite (state, { idStr, favorited }) {
+      forEach(state.statuses, statuses => {
+        const target = statuses.find(status => status.id_str === idStr)
+        if (target !== undefined) {
+          target.favorited = favorited
+        }
+      })
+    },
+    setRetweet (state, { idStr, retweeted }) {
+      forEach(state.statuses, statuses => {
+        const target = statuses.find(status => status.id_str === idStr)
+        if (target !== undefined) {
+          target.retweeted = retweeted
+        }
+      })
+    },
   },
   actions: {
     fetchUserInfo ({ commit }) {
@@ -80,6 +96,30 @@ export default new Vuex.Store({
         .then(statuses => {
           commit('appendStatuses', { listId, statuses })
         })
+    },
+    favorite ({ commit }, idStr) {
+      commit('setFavorite', {
+        idStr,
+        favorited: true,
+      })
+    },
+    unFavorite ({ commit }, idStr) {
+      commit('setFavorite', {
+        idStr,
+        favorited: false,
+      })
+    },
+    retweet ({ commit }, idStr) {
+      commit('setRetweet', {
+        idStr,
+        retweeted: true,
+      })
+    },
+    unRetweet ({ commit }, idStr) {
+      commit('setRetweet', {
+        idStr,
+        retweeted: false,
+      })
     },
   },
 })
