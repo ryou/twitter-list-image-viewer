@@ -6,7 +6,6 @@
       <div class="ImageViewer_overlay" />
       <template v-if="status !== undefined">
         <TweetImages
-          v-touch-swipe.vertical="historyBack"
           v-touch-hold="() => showActionSheet = true"
           :images="images"
           :show-arrow="showArrow"
