@@ -37,34 +37,48 @@
           </div>
           <div class="Status_actions">
             <div class="Status_action">
-              <q-btn
-                v-if="status.favorited"
-                round
-                icon="favorite"
-                text-color="red"
-                @click="unfavorite"
-              />
-              <q-btn
-                v-else
-                round
-                icon="favorite"
-                @click="favorite"
-              />
+              <transition
+                mode="out-in"
+                :enter-active-class="(status.favorited) ? 'actionActivate' : 'actionDeactivate'"
+              >
+                <q-btn
+                  v-if="status.favorited"
+                  key="unfavorite"
+                  round
+                  icon="favorite"
+                  text-color="red"
+                  @click="unfavorite"
+                />
+                <q-btn
+                  v-else
+                  key="favorite"
+                  round
+                  icon="favorite"
+                  @click="favorite"
+                />
+              </transition>
             </div>
             <div class="Status_action">
-              <q-btn
-                v-if="status.retweeted"
-                round
-                icon="repeat"
-                text-color="green"
-                @click="unretweet"
-              />
-              <q-btn
-                v-else
-                round
-                icon="repeat"
-                @click="retweet"
-              />
+              <transition
+                mode="out-in"
+                :enter-active-class="(status.retweeted) ? 'actionActivate' : 'actionDeactivate'"
+              >
+                <q-btn
+                  v-if="status.retweeted"
+                  key="unretweet"
+                  round
+                  icon="repeat"
+                  text-color="green"
+                  @click="unretweet"
+                />
+                <q-btn
+                  v-else
+                  key="retweet"
+                  round
+                  icon="repeat"
+                  @click="retweet"
+                />
+              </transition>
             </div>
             <div class="Status_action">
               <q-btn
@@ -242,5 +256,36 @@ export default {
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 80px;
+}
+
+.actionActivate {
+  animation-name: actionActivate;
+  animation-duration: .5s;
+}
+@keyframes actionActivate {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.3)
+  }
+  100% {
+    transform: scale(1)
+  }
+}
+.actionDeactivate {
+  animation-name: actionDeactivate;
+  animation-duration: .5s;
+}
+@keyframes actionDeactivate {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.8)
+  }
+  100% {
+    transform: scale(1)
+  }
 }
 </style>
