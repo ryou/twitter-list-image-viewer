@@ -1,32 +1,13 @@
 <template>
-  <q-layout view="hHh Lpr lFf">
-    <q-layout-header v-if="$route.meta.header !== undefined">
-      <q-toolbar color="primary">
-        <q-btn
-          v-if="$route.meta.header.back === true"
-          flat
-          round
-          dense
-          icon="arrow_back"
-          @click="historyBack"
-        />
-        <q-toolbar-title>{{ $route.meta.header.title }}</q-toolbar-title>
-      </q-toolbar>
-    </q-layout-header>
-
-    <q-page-container>
-      <transition
-        mode="out-in"
-        :enter-active-class="transition.enterActiveClass"
-        :leave-active-class="transition.leaveActiveClass"
-        @after-leave="$root.$emit('triggerScroll')"
-      >
-        <keep-alive include="HomePage,ListPage">
-          <router-view />
-        </keep-alive>
-      </transition>
-    </q-page-container>
-  </q-layout>
+  <transition
+    mode="out-in"
+    :enter-active-class="transition.enterActiveClass"
+    @after-leave="$root.$emit('triggerScroll')"
+  >
+    <keep-alive include="HomePage,ListPage">
+      <router-view />
+    </keep-alive>
+  </transition>
 </template>
 
 <script>
@@ -87,6 +68,6 @@ body {
 }
 
 .animated {
-  animation-duration: .2s;
+  animation-duration: .15s;
 }
 </style>
