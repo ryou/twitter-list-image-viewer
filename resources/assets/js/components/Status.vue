@@ -28,21 +28,9 @@
         </div>
         <div class="Status_rightCol">
           <div class="Status_info">
-            <a
-              :href="`https://twitter.com/${tweet.user.screen_name}`"
-              target="_blank"
-              class="Status_name"
-            >{{ tweet.user.name }}</a>
-            <a
-              :href="`https://twitter.com/${tweet.user.screen_name}`"
-              target="_blank"
-              class="Status_screenName"
-            >@{{ tweet.user.screen_name }}</a>・
-            <a
-              :href="`https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`"
-              target="_blank"
-              class="Status_created"
-            >{{ tweetDate }}</a>
+            <span class="Status_name">{{ tweet.user.name }}</span>
+            <span class="Status_screenName">@{{ tweet.user.screen_name }}</span>
+            <span class="Status_created">{{ tweetDate }}</span>
           </div>
           <div class="Status_body">
             {{ tweet.text }}
@@ -82,18 +70,29 @@
               <q-btn
                 round
                 icon="more_horiz"
+                @click="showActionSheet = true"
               />
             </div>
           </div>
         </div>
       </div>
     </div>
+    <TweetActionSheet
+      :active="showActionSheet"
+      :status="tweet"
+      @hide="showActionSheet = false"
+    />
   </div>
 </template>
 
 <script>
+import TweetActionSheet from '@/components/TweetActionSheet'
+
 export default {
   name: 'Status',
+  components: {
+    TweetActionSheet,
+  },
   props: {
     status: {
       type: Object,
@@ -106,6 +105,7 @@ export default {
         favorite: false,
         retweet: false,
       },
+      showActionSheet: false,
     }
   },
   computed: {

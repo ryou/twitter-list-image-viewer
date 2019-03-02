@@ -13,14 +13,19 @@
           :index="Number($route.params.index)"
           @click.native="showInfo = !showInfo"
         />
-        <div
-          v-show="showInfo"
-          class="ImageViewer_status"
+        <transition
+          enter-active-class="animated fadeInUp"
+          leave-active-class="animated fadeOutDown"
         >
-          <Status
-            :status="status"
-          />
-        </div>
+          <div
+            v-show="showInfo"
+            class="ImageViewer_status"
+          >
+            <Status
+              :status="status"
+            />
+          </div>
+        </transition>
       </template>
     </div>
   </q-page>
