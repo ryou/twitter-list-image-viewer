@@ -40,20 +40,6 @@ const router = new VueRouter({
       },
     },
   ],
-  scrollBehavior (to, from, savedPosition) {
-    // TODO: キレイに動くようになったが、なぜこれでキレイに動くのかちゃんとわかっていない
-    // ScrollBehaviorの実装を見る必要あるかも
-    // https://github.com/quasarframework/quasar/issues/1466#issuecomment-416495843
-    const position = savedPosition || { x: 0, y: 0 }
-    return new Promise((resolve, reject) => {
-      router.app.$root.$once('triggerScroll', () => {
-        router.app.$nextTick(() => {
-          window.scrollTo({ top: position.y, left: position.x })
-          resolve(position)
-        })
-      })
-    })
-  },
 })
 
 export default router
