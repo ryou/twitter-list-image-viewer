@@ -1,13 +1,7 @@
 <template>
-  <transition
-    mode="out-in"
-    :enter-active-class="transition.enterActiveClass"
-    @after-leave="$root.$emit('triggerScroll')"
-  >
-    <keep-alive include="HomePage,ListPage">
-      <router-view />
-    </keep-alive>
-  </transition>
+  <keep-alive include="HomePage,ListPage">
+    <router-view />
+  </keep-alive>
 </template>
 
 <script>
@@ -15,22 +9,6 @@ import ErrorDialogsMixin from '@/mixins/ErrorDialogs'
 
 export default {
   mixins: [ ErrorDialogsMixin ],
-  data () {
-    return {
-      transition: {
-        enterActiveClass: '',
-        leaveActiveClass: '',
-      },
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      const toDepth = to.path.split('/').length
-      const fromDepth = from.path.split('/').length
-      this.transition.enterActiveClass = toDepth < fromDepth ? 'animated fadeInLeft' : 'animated fadeInRight'
-      this.transition.leaveActiveClass = toDepth < fromDepth ? 'animated fadeOutRight' : 'animated fadeOutLeft'
-    },
-  },
   created () {
     if (this.$store.state.user !== null && this.$store.state.lists.length > 0) {
       return
@@ -89,6 +67,6 @@ body {
 }
 
 .animated {
-  animation-duration: .15s;
+  animation-duration: .2s;
 }
 </style>
