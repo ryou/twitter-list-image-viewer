@@ -16,7 +16,35 @@ class ApiClient {
   }
 
   fetchListStatuses (listId, params = {}) {
-    return this.client.get(`/api/lists/statuses/${listId}`, { params })
+    return this.client.get(
+      `/api/lists/statuses/${listId}`,
+      {
+        params: Object.assign(params, {
+          // entitiesは重い上に使わないので省く
+          include_entities: false,
+        }),
+      }
+    )
+      .then(res => res.data)
+  }
+
+  favorite (id) {
+    return this.client.post(`/api/favorites/create/${id}`)
+      .then(res => res.data)
+  }
+
+  unfavorite (id) {
+    return this.client.post(`/api/favorites/destroy/${id}`)
+      .then(res => res.data)
+  }
+
+  retweet (id) {
+    return this.client.post(`/api/statuses/retweet/${id}`)
+      .then(res => res.data)
+  }
+
+  unretweet (id) {
+    return this.client.post(`/api/statuses/unretweet/${id}`)
       .then(res => res.data)
   }
 }

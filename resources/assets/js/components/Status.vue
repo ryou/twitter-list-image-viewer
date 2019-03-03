@@ -28,43 +28,105 @@
         </div>
         <div class="Status_rightCol">
           <div class="Status_info">
-            <a
-              :href="`https://twitter.com/${tweet.user.screen_name}`"
-              target="_blank"
-              class="Status_name"
-            >{{ tweet.user.name }}</a>
-            <a
-              :href="`https://twitter.com/${tweet.user.screen_name}`"
-              target="_blank"
-              class="Status_screenName"
-            >@{{ tweet.user.screen_name }}</a>・
-            <a
-              :href="`https://twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`"
-              target="_blank"
-              class="Status_created"
-            >{{ tweetDate }}</a>
+            <span class="Status_name">{{ tweet.user.name }}</span>
+            <span class="Status_screenName">@{{ tweet.user.screen_name }}</span>
+            <span class="Status_created">{{ tweetDate }}</span>
           </div>
           <div class="Status_body">
             {{ tweet.text }}
           </div>
+          <div class="Status_actions">
+            <div class="Status_action">
+              <transition
+                mode="out-in"
+                :enter-active-class="(status.favorited) ? 'actionActivate' : 'actionDeactivate'"
+              >
+                <q-btn
+                  v-if="status.favorited"
+                  key="unfavorite"
+                  round
+                  icon="favorite"
+                  text-color="red"
+                  @click="unfavorite"
+                />
+                <q-btn
+                  v-else
+                  key="favorite"
+                  round
+                  icon="favorite"
+                  @click="favorite"
+                />
+              </transition>
+            </div>
+            <div class="Status_action">
+              <transition
+                mode="out-in"
+                :enter-active-class="(status.retweeted) ? 'actionActivate' : 'actionDeactivate'"
+              >
+                <q-btn
+                  v-if="status.retweeted"
+                  key="unretweet"
+                  round
+                  icon="repeat"
+                  text-color="green"
+                  @click="unretweet"
+                />
+                <q-btn
+                  v-else
+                  key="retweet"
+                  round
+                  icon="repeat"
+                  @click="retweet"
+                />
+              </transition>
+            </div>
+            <div class="Status_action">
+              <q-btn
+                round
+                icon="more_horiz"
+                @click="showActionSheet = true"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <TweetActionSheet
+      :active="showActionSheet"
+      :status="tweet"
+      @hide="showActionSheet = false"
+    />
   </div>
 </template>
 
 <script>
+import TweetActionSheet from '@/components/TweetActionSheet'
+
 export default {
   name: 'Status',
+  components: {
+    TweetActionSheet,
+  },
   props: {
     status: {
       type: Object,
       required: true,
     },
   },
+  data () {
+    return {
+      isConnecting: {
+        favorite: false,
+        retweet: false,
+      },
+      showActionSheet: false,
+    }
+  },
   computed: {
     tweet () {
-      if (this.status.retweeted_status !== undefined) return this.status.retweeted_status
+      if (this.status.retweeted_status !== undefined) {
+        return this.status.retweeted_status
+      }
 
       return this.status
     },
@@ -72,6 +134,48 @@ export default {
       const date = new Date(this.tweet.created_at)
 
       return `${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`
+    },
+  },
+  methods: {
+    favorite () {
+      if (this.isConnecting.favorite) {
+        return
+      }
+      this.isConnecting.favorite = true
+      this.$store.dispatch('favorite', this.status.id_str)
+        .then(() => {
+          this.isConnecting.favorite = false
+        })
+    },
+    unfavorite () {
+      if (this.isConnecting.favorite) {
+        return
+      }
+      this.isConnecting.favorite = true
+      this.$store.dispatch('unfavorite', this.status.id_str)
+        .then(() => {
+          this.isConnecting.favorite = false
+        })
+    },
+    retweet () {
+      if (this.isConnecting.retweet) {
+        return
+      }
+      this.isConnecting.retweet = true
+      this.$store.dispatch('retweet', this.status.id_str)
+        .then(() => {
+          this.isConnecting.retweet = false
+        })
+    },
+    unretweet () {
+      if (this.isConnecting.retweet) {
+        return
+      }
+      this.isConnecting.retweet = true
+      this.$store.dispatch('unretweet', this.status.id_str)
+        .then(() => {
+          this.isConnecting.retweet = false
+        })
     },
   },
 }
@@ -138,6 +242,50 @@ export default {
   font-size: 12px;
 }
 .Status_body {
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.3;
+
+  border-bottom: 1px solid rgba(#fff, .75);
+  padding-bottom: 10px;
+}
+.Status_actions {
+  display: flex;
+  justify-content: flex-start;
+}
+.Status_action {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 80px;
+}
+
+.actionActivate {
+  animation-name: actionActivate;
+  animation-duration: .5s;
+}
+@keyframes actionActivate {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.3)
+  }
+  100% {
+    transform: scale(1)
+  }
+}
+.actionDeactivate {
+  animation-name: actionDeactivate;
+  animation-duration: .5s;
+}
+@keyframes actionDeactivate {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.8)
+  }
+  100% {
+    transform: scale(1)
+  }
 }
 </style>

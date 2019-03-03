@@ -1,28 +1,60 @@
 <template>
-  <q-page>
-    <div
-      class="ImageViewer"
+  <q-layout view="hHh Lpr lFf">
+    <transition
+      enter-active-class="animated fadeInDown"
+      leave-active-class="animated fadeOutUp"
     >
-      <div class="ImageViewer_overlay" />
-      <template v-if="status !== undefined">
-        <TweetImages
-          v-touch-swipe.vertical="historyBack"
-          :images="images"
-          :show-arrow="showArrow"
-          :index="Number($route.params.index)"
-          @click.native="showInfo = !showInfo"
-        />
-        <div
-          v-show="showInfo"
-          class="ImageViewer_status"
+      <q-layout-header
+        v-show="showInfo"
+        class="no-shadow"
+      >
+        <q-toolbar
+          color="transparent"
         >
-          <Status
-            :status="status"
+          <q-btn
+            flat
+            round
+            dense
+            icon="arrow_back"
+            @click="historyBack"
           />
+          <q-toolbar-title />
+        </q-toolbar>
+      </q-layout-header>
+    </transition>
+
+    <q-page-container style="padding-top: 0;">
+      <q-page style="height: 100vh;">
+        <div
+          class="ImageViewer"
+        >
+          <div class="ImageViewer_overlay" />
+          <template v-if="status !== undefined">
+            <TweetImages
+              v-touch-hold="() => showActionSheet = true"
+              :images="images"
+              :show-arrow="showArrow"
+              :index="Number($route.params.index)"
+              @click.native="showInfo = !showInfo"
+            />
+            <transition
+              enter-active-class="animated fadeInUp"
+              leave-active-class="animated fadeOutDown"
+            >
+              <div
+                v-show="showInfo"
+                class="ImageViewer_status"
+              >
+                <Status
+                  :status="status"
+                />
+              </div>
+            </transition>
+          </template>
         </div>
-      </template>
-    </div>
-  </q-page>
+      </q-page>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
@@ -59,7 +91,9 @@ export default {
       })
     },
     showArrow () {
-      if (this.$q.screen.lt.lg) return false
+      if (this.$q.screen.lt.lg) {
+        return false
+      }
 
       return this.showInfo
     },
@@ -94,6 +128,10 @@ export default {
   text-align: center;
   background: rgba(#000, .8);
 
-  padding: 20px 10px;
+  padding: 20px 10px 10px;
+
+  // 「！」や「？」が連続で大量に入っているツイートだと、
+  // なぜか改行されないので暫定対策
+  overflow: hidden;
 }
 </style>
