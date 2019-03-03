@@ -52,8 +52,29 @@ export default {
           this.showErrorDialog(error)
         }
       })
+
+    // ページがバックグラウンドから戻ってきた際に、認証が切れていないか確認
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        this.confirmAuthentication()
+      }
+    })
   },
   methods: {
+    confirmAuthentication () {
+      this.$q.loading.show()
+      this.$store.dispatch('fetchUserInfo')
+        .then(() => {
+          this.$q.loading.hide()
+        })
+        .catch(error => {
+          if (error.response.status === 401) {
+            this.showLoginDialog()
+          } else {
+            this.showErrorDialog(error)
+          }
+        })
+    },
     historyBack () {
       window.history.back()
     },

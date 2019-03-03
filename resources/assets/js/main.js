@@ -9,6 +9,7 @@ import 'quasar-extras/ionicons'
 import 'quasar-extras/roboto-font'
 import 'quasar-extras/animate'
 import Quasar, * as All from 'quasar-framework/dist/quasar.mat.esm'
+import langJa from 'quasar-framework/i18n/ja'
 
 // Vue Components
 import App from '@/App'
@@ -22,6 +23,7 @@ Vue.use(Quasar, {
   directives: All,
   plugins: All,
   animations: All,
+  i18n: langJa,
 })
 
 // Vueの仕様上どうしようもないのでここではno-new解除

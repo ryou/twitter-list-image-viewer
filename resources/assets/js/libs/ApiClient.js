@@ -16,7 +16,15 @@ class ApiClient {
   }
 
   fetchListStatuses (listId, params = {}) {
-    return this.client.get(`/api/lists/statuses/${listId}`, { params })
+    return this.client.get(
+      `/api/lists/statuses/${listId}`,
+      {
+        params: Object.assign(params, {
+          // entitiesは重い上に使わないので省く
+          include_entities: false,
+        }),
+      }
+    )
       .then(res => res.data)
   }
 
