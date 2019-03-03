@@ -36,7 +36,9 @@ export default new Vuex.Store({
       state.user = userData
     },
     setLists (state, listsData) {
-      state.lists = listsData
+      state.lists = listsData.map(list => {
+        return Object.assign(list, { showRetweets: false })
+      })
     },
     setStatuses (state, { listId, statuses }) {
       Vue.set(state.statuses, listId, statuses)
@@ -64,6 +66,10 @@ export default new Vuex.Store({
           target.retweeted = retweeted
         }
       })
+    },
+    setShowRetweets (state, { idStr, show }) {
+      const list = state.lists.find(list => list.id_str === idStr)
+      list.showRetweets = show
     },
   },
   actions: {
@@ -150,6 +156,18 @@ export default new Vuex.Store({
             retweeted: true,
           })
         })
+    },
+    showRetweets ({ commit }, idStr) {
+      commit('setShowRetweets', {
+        idStr,
+        show: true,
+      })
+    },
+    hideRetweets ({ commit }, idStr) {
+      commit('setShowRetweets', {
+        idStr,
+        show: false,
+      })
     },
   },
 })
